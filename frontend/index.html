@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexusChat</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+      .chat-window {
+        min-height: 320px;
+        max-height: 320px;
+        overflow-y: scroll;
+      }
+      body {
+        background: linear-gradient(180deg, #ffb7b7 0%, #727272 100%),
+          radial-gradient(60.91% 100% at 50% 0%, #ffd1d1 0%, #260000 100%),
+          linear-gradient(238.72deg, #ffdddd 0%, #720066 100%),
+          linear-gradient(127.43deg, #00ffff 0%, #ff4444 100%),
+          radial-gradient(100.22% 100% at 70.57% 0%, #ff0000 0%, #00ffe0 100%),
+          linear-gradient(127.43deg, #b7d500 0%, #3300ff 100%);
+        background-blend-mode: screen, overlay, hard-light, color-burn,
+          color-dodge, normal;
+        overflow: hidden;
+      }
+      .chat-window::-webkit-scrollbar {
+        display: none;
+      }
+
+      .chat-window {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+    </style>
+  </head>
+
+  <body class="flex justify-center mt-14 h-screen">
+    <div class="w-full max-w-lg">
+      <div class="bg-gray-600 text-white rounded-t-lg shadow-md p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">NexusChat</h2>
+          <div class="flex items-center space-x-2">
+            <button type="button" class="open-admin bg-gray-500 hover:bg-gray-600 text-white font-semibold px-3 py-1 rounded-lg" title="Enter admin mode to manage rooms" aria-label="Open admin modal">Admin</button>
+            <button type="button" class="clear-chat hidden bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded-lg">
+              Clear Chat
+            </button>
+          </div>
+        </div>
+
+        <div class="flex space-x-2 mb-4 room-tabs"></div>
+
+        <div class="flex flex-col space-y-4 chat-window"></div>
+      </div>
+
+      <div class="bg-gray-600 rounded-b-lg shadow-md p-5">
+        <h1 class="text-2xl text-white font-semibold mb-4"></h1>
+
+        <!-- Username entry for own names -->
+        <div class="flex items-center mb-3">
+          <input
+            type="text"
+            class="username-input border border-gray-300 rounded-lg px-3 py-2 flex-grow"
+            placeholder="Your name (shown to others)"
+          />
+          <button
+            type="button"
+            class="save-username bg-green-500 hover:bg-green-600 text-white font-semibold px-3 py-2 rounded-lg ml-2"
+            aria-label="Save display name"
+            title="Save and apply your display name; persists in this browser."
+          >Save Name</button>
+        </div>
+        <p class="username-error text-red-400 text-sm mb-3 hidden"></p>
+
+        <form class="chat">
+          <div class="flex items-center mb-4">
+            <i class="fas fa-comment mr-2"></i>
+            <input
+              type="text"
+              class="border border-gray-300 rounded-lg px-4 py-2 flex-grow"
+              placeholder="Type your message here"
+              id="message"
+            />
+
+            <button
+              class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg ml-2"
+            >
+              Send
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Admin Clear Modal -->
+    <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+      <div class="bg-gray-700 rounded-lg p-6 w-full max-w-md shadow-lg">
+        <h3 class="text-white text-lg font-semibold mb-3">Clear Room</h3>
+        <p class="text-gray-300 text-sm mb-4">Enter admin token to clear messages in the current room. This affects all users.</p>
+        <input type="password" class="admin-token-input border border-gray-300 rounded-lg px-3 py-2 w-full mb-3" placeholder="Admin token" />
+        <p class="error-text text-red-400 text-sm mb-3 hidden"></p>
+        <div class="flex justify-end space-x-2">
+          <button type="button" class="cancel-clear bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg">Cancel</button>
+          <button type="button" class="verify-admin bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg">Verify Token</button>
+          <button type="button" class="confirm-clear bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">Clear Room</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+  </html>
