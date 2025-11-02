@@ -30,18 +30,6 @@ Real-time chat application featuring persistent storage (SQLite), input validati
 - Run: `docker run -p 3000:3000 chat-app`
 - Compose: `docker-compose up --build`
 
-## Configuration
-- `PORT` env var (default `3000`)
-- SQLite file at `backend/chat.db` (auto-created)
-  - Schema: `messages(id, username, message, createdAt, room)`
-  - Auto-migration: server adds `room` column if missing.
-
-## Deployment (Render/Railway)
-- Set `PORT` environment variable.
-- Use Node 20 runtime.
-- Start command: `node backend/server-completed.js`
-- Persist `backend/` folder or configure a managed DB if preferred.
-
 ## Architecture
 - `backend/server-completed.js`: Express HTTP + Socket.IO server; writes to SQLite; serves `frontend/`.
 - `frontend/`: Tailwind UI; Socket.IO client; trims and shows timestamps; renders room tabs and handles switching.
@@ -57,6 +45,3 @@ Real-time chat application featuring persistent storage (SQLite), input validati
 - `receive-messages`: server → client; payload `{ chatHistory, username?, rooms?, currentRoom? }`
 - `post-message`: client → server; payload `{ message }` (trimmed → sanitized → stored with `createdAt`, `room`)
 - `join-room`: client → server; payload `{ room }` (switches room and refreshes history)
-
-## Troubleshooting
-- If you see a Font Awesome CDN error (`net::ERR_FAILED`), icons may not load, but chat functionality remains unaffected. Replace with local SVGs if desired.
