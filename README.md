@@ -1,7 +1,7 @@
 # Chat App (Socket.IO + Express)
 
 ## Deployed
-https://nexuschat-u5u6.onrender.com/
+https://nexuschat-u5u6.onrender.com
 
 Real-time chat application featuring persistent storage (SQLite), input validation, timestamps, chat rooms, and end-to-end tests. Containerized with Docker and ready for CI.
 
