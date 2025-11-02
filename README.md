@@ -1,5 +1,8 @@
 # Chat App (Socket.IO + Express)
 
+## Deployed
+https://nexuschat-u5u6.onrender.com/)
+
 Real-time chat application featuring persistent storage (SQLite), input validation, timestamps, chat rooms, and end-to-end tests. Containerized with Docker and ready for CI.
 
 ## Features
@@ -54,12 +57,6 @@ Real-time chat application featuring persistent storage (SQLite), input validati
 - `receive-messages`: server → client; payload `{ chatHistory, username?, rooms?, currentRoom? }`
 - `post-message`: client → server; payload `{ message }` (trimmed → sanitized → stored with `createdAt`, `room`)
 - `join-room`: client → server; payload `{ room }` (switches room and refreshes history)
-
-## Resume Bullets (Example)
-- Built a real-time multi-room chat platform using `Node.js`, `Express`, `Socket.IO` with persisted storage in `SQLite`; added input sanitization and rate limiting.
-- Implemented room-scoped broadcasting and tabs-based UI for `general`, `support`, `random` rooms; added automatic DB migration for room support.
-- Wrote integration tests (`node:test`) validating socket event flow and timestamps; containerized with Docker; configured CI to run tests on every push.
-- Documented architecture, setup, operations, and socket events; prepared for deployment via `PORT`-driven configuration.
 
 ## Troubleshooting
 - If you see a Font Awesome CDN error (`net::ERR_FAILED`), icons may not load, but chat functionality remains unaffected. Replace with local SVGs if desired.
